@@ -2,17 +2,13 @@
 
 import styles from "./ProcessCV.module.css";
 import { education, experience } from "@/data/portfolio";
-import { useLanguage } from "@/context/LanguageContext";
 
 export default function ProcessCV() {
-    const { t } = useLanguage();
-
     return (
         <div className={styles.container}>
             {/* Experience Table */}
             <div className={styles.sectionHeader}>
-                <span className={styles.sectionIcon}>⚡</span>
-                <h3 className={styles.sectionTitle}>{t.cv.experience}</h3>
+                <h3 className={styles.sectionTitle}>Experience</h3>
             </div>
             <div className={styles.tableWrapper}>
                 <table className={styles.table}>
@@ -40,8 +36,7 @@ export default function ProcessCV() {
 
             {/* Education Table */}
             <div className={styles.sectionHeader} style={{ marginTop: "40px" }}>
-                <span className={styles.sectionIcon}>🎓</span>
-                <h3 className={styles.sectionTitle}>{t.cv.education}</h3>
+                <h3 className={styles.sectionTitle}>Education</h3>
             </div>
             <div className={styles.tableWrapper}>
                 <table className={styles.table}>

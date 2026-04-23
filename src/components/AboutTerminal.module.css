@@ -1,0 +1,165 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.terminal {
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: var(--bg-terminal);
+}
+
+.titleBar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    background: var(--bg-tertiary);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.dots {
+    display: flex;
+    gap: 6px;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.titleText {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin: 0 auto;
+}
+
+.body {
+    padding: 24px 28px;
+}
+
+/* ── Prompt ── */
+.prompt {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    margin-bottom: 12px;
+}
+
+.dollar { color: var(--accent-green); }
+.cmd    { color: var(--accent-cyan); }
+
+/* ── Block ── */
+.block {
+    margin-bottom: 4px;
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.divider {
+    height: 1px;
+    background: var(--border-color);
+    margin: 20px 0;
+    opacity: 0.5;
+}
+
+/* ── Key-value line ── */
+.line {
+    display: flex;
+    gap: 12px;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    line-height: 1.6;
+}
+
+.label {
+    color: var(--text-muted);
+    min-width: 90px;
+    flex-shrink: 0;
+}
+
+.value {
+    color: var(--text-primary);
+}
+
+.bioLine {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    padding-top: 4px;
+}
+
+/* ── Certifications ── */
+.certItem {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    font-size: 0.85rem;
+    text-decoration: none;
+    line-height: 1.6;
+    transition: color var(--transition-fast);
+}
+
+a.certItem:hover .certName,
+a.certItem:hover .certMeta {
+    color: var(--accent-cyan);
+}
+
+.check    { color: var(--accent-green); font-family: var(--font-mono); }
+.certName { color: var(--text-primary); font-family: var(--font-mono); font-size: 0.83rem; }
+.certMeta { color: var(--text-muted);   font-family: var(--font-mono); font-size: 0.78rem; }
+
+/* ── Experience / Education ── */
+.entry {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 6px 0;
+}
+
+.entryTitle {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--text-primary);
+}
+
+.entrySub {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+}
+
+/* ── Cursor ── */
+.cursor {
+    display: inline-block;
+    width: 8px;
+    height: 15px;
+    background: var(--accent-green);
+    animation: blink 1s step-end infinite;
+    vertical-align: middle;
+}
+
+@keyframes blink {
+    50% { opacity: 0; }
+}
+
+/* ── TryHackMe badge ── */
+.badge {
+    display: flex;
+    justify-content: flex-start;
+}
+
+@media (max-width: 768px) {
+    .body { padding: 16px; }
+    .line { flex-direction: column; gap: 2px; }
+    .label { min-width: unset; }
+}

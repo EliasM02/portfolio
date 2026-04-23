@@ -1,11 +1,12 @@
 "use client";
 
+import Link from "next/link";
 import { writeups } from "@/data/portfolio";
 import styles from "./Writeups.module.css";
 
 const difficultyColor: Record<string, string> = {
     Easy: "var(--accent-green)",
-    Medium: "var(--accent-orange)",
+    Medium: "var(--accent-orange, #f97316)",
     Hard: "var(--accent-red)",
     Insane: "var(--accent-purple)",
 };
@@ -14,12 +15,10 @@ export default function Writeups() {
     return (
         <div className={styles.list}>
             {writeups.map((w, i) => (
-                <a
+                <Link
                     key={i}
-                    href={w.link ?? "#"}
+                    href={`/writeups/${w.slug}`}
                     className={styles.item}
-                    target="_blank"
-                    rel="noopener noreferrer"
                 >
                     <div className={styles.left}>
                         <span className={styles.platform}>{w.platform}</span>
@@ -32,7 +31,7 @@ export default function Writeups() {
                     >
                         {w.difficulty}
                     </span>
-                </a>
+                </Link>
             ))}
         </div>
     );

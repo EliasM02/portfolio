@@ -64,58 +64,71 @@ export const projects: Project[] = [
             "An interactive educational platform that teaches cybersecurity concepts using real-world analogies and animations — no technical background required.",
         tech: ["React", "Framer Motion", "Vite", "CSS"],
         github: "https://github.com/EliasM02/CyberSecTeach",
+        live: "https://cybersecteach.eliasmahler.com",
         featured: true,
     },
     {
-        title: "Attack and Defend Lab",
+        title: "E-Commerce BI Dashboard",
         description:
-            "A lab environment for practicing offensive security and defensive security.",
-        tech: ["Python", "Nmap", "Detection", "Analysis"],
+            "Power BI analysis of 89K orders from Brazilian e-commerce platform Olist (2016–2018). Built a star-schema data model with DAX measures across 5 dashboard pages covering revenue KPIs, product categories, geographic distribution, seasonal trends, and payment behaviour.",
+        tech: ["Power BI", "DAX", "SQL", "Data Modelling"],
+        live: "/PowerBI_Project_Rapport.pdf",
+        featured: true,
+    },
+    {
+        title: "Attack & Defend Lab",
+        description:
+            "A Python simulation framework modelling the full attacker–defender lifecycle. Includes attacker personas (fast/stealthy scanner), a real-time detection engine, threat hunting analytics with reputation scoring and baseline analysis, and incident narrative generation.",
+        tech: ["Python", "TCP Sockets", "Matplotlib", "Multithreading"],
         github: "https://github.com/EliasM02/AttackDefendLab",
         featured: true,
-    },
-    {
-        title: "CTF Writeup Platform",
-        description:
-            "A web platform for publishing CTF writeups with markdown support, syntax highlighting, and tagging system.",
-        tech: ["Next.js", "TypeScript", "MDX", "PostgreSQL"],
-        github: "https://github.com/yourusername/ctf-writeups",
-        live: "https://writeups.example.com",
-        featured: true,
-    },
-    {
-        title: "Password Manager CLI",
-        description:
-            "A secure command-line password manager with AES-256 encryption, key derivation, and clipboard integration.",
-        tech: ["Python", "Cryptography", "SQLite", "Click"],
-        github: "https://github.com/yourusername/pass-cli",
-        featured: true,
-    },
-    {
-        title: "Homelab Dashboard",
-        description:
-            "A self-hosted dashboard for monitoring homelab services, resource usage, and container health.",
-        tech: ["React", "Docker", "Prometheus", "Grafana"],
-        github: "https://github.com/yourusername/homelab-dash",
-        featured: false,
     },
 ];
 
 export interface Writeup {
     title: string;
+    slug: string;
     platform: string;
     category: string;
     difficulty: "Easy" | "Medium" | "Hard" | "Insane";
-    link?: string;
+    date: string;
+    filename: string;
+    summary: string;
 }
 
 export const writeups: Writeup[] = [
     {
-        title: "TryHackMe: Room Name",
+        title: "TryHeartMe",
+        slug: "tryheartme",
+        platform: "TryHackMe",
+        category: "Web / JWT",
+        difficulty: "Easy",
+        date: "April 15, 2026",
+        filename: "TryHeartMe.md",
+        summary:
+            "A web challenge centered around JWT cookie manipulation. By decoding the session cookie, modifying the role to Admin and inflating the credit balance, then re-encoding and replacing the cookie, access to a hidden shop item was gained — demonstrating the danger of trusting unsigned or weakly-signed tokens.",
+    },
+    {
+        title: "Agent T",
+        slug: "agent-t",
+        platform: "TryHackMe",
+        category: "Web / RCE",
+        difficulty: "Easy",
+        date: "April 15, 2026",
+        filename: "Agent T.md",
+        summary:
+            "An Nmap scan revealed a PHP development server (8.1.0-dev) exposed on port 80. This specific version contains a backdoor CVE that allows unauthenticated remote code execution via a crafted User-Agentt header. Running a public exploit script immediately yielded a root shell.",
+    },
+    {
+        title: "Brooklyn Nine Nine",
+        slug: "b99",
         platform: "TryHackMe",
         category: "Privilege Escalation",
         difficulty: "Easy",
-        link: "#",
+        date: "April 14, 2026",
+        filename: "B99 Writeup.md",
+        summary:
+            "Enumeration revealed FTP with anonymous login enabled, exposing a note hinting at a weak password. Hydra was used to brute-force SSH credentials for the user Jake. Once in, sudo -l showed Jake could run `less` as root — a classic GTFOBins escalation path that dropped a full root shell and exposed both flags.",
     },
 ];
 
@@ -127,13 +140,6 @@ export interface CVEntry {
 }
 
 export const experience: CVEntry[] = [
-    {
-        period: "2024 — Present",
-        title: "Security Analyst Intern",
-        organization: "Company Name",
-        description:
-            "Conducting vulnerability assessments, penetration testing, and security audits for web applications.",
-    },
     {
         period: "2025 — Present",
         title: "Teaching Assistant",

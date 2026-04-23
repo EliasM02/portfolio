@@ -1,7 +1,7 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import Section from "@/components/Section";
-import NetworkGraph from "@/components/NetworkGraph";
+import AboutTerminal from "@/components/AboutTerminal";
 import ProjectCards from "@/components/ProjectCard";
 import Writeups from "@/components/Writeups";
 import ProcessCV from "@/components/ProcessCV";
@@ -18,8 +18,8 @@ export default function Home() {
         <Hero />
 
         {/* About / BloodHound Graph */}
-        <Section id="about" label="bloodhound" title="Attack Path">
-          <NetworkGraph />
+        <Section id="about" label="cat profile.json" title="About">
+          <AboutTerminal />
         </Section>
 
         {/* Projects */}

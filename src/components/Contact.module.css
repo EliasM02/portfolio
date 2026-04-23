@@ -185,6 +185,20 @@
     opacity: 0.9;
 }
 
+.successMsg {
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    color: var(--accent-green);
+    margin-bottom: 12px;
+}
+
+.errorMsg {
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    color: var(--accent-red);
+    margin-bottom: 12px;
+}
+
 @media (max-width: 768px) {
     .grid {
         grid-template-columns: 1fr;

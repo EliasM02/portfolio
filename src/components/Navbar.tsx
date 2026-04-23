@@ -2,14 +2,11 @@
 
 import { useState, useEffect } from "react";
 import styles from "./Navbar.module.css";
-import ThemeToggle from "./ThemeToggle";
-import { useLanguage } from "@/context/LanguageContext";
 
 export default function Navbar() {
     const [scrolled, setScrolled] = useState(false);
     const [activeSection, setActiveSection] = useState("hero");
     const [mobileOpen, setMobileOpen] = useState(false);
-    const { t, language, setLanguage } = useLanguage();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -55,11 +52,11 @@ export default function Navbar() {
     };
 
     const links = [
-        { name: t.nav.about, to: "about" },
-        { name: t.nav.projects, to: "projects" },
-        { name: t.nav.writeups, to: "writeups" },
-        { name: t.nav.cv, to: "cv" },
-        { name: t.nav.contact, to: "contact" },
+        { name: "About", to: "about" },
+        { name: "Projects", to: "projects" },
+        { name: "Writeups", to: "writeups" },
+        { name: "CV", to: "cv" },
+        { name: "Contact", to: "contact" },
     ];
 
     return (
@@ -85,17 +82,6 @@ export default function Navbar() {
                 </div>
 
                 <div className={styles.right}>
-                    {/* Language Toggle */}
-                    <button
-                        onClick={() => setLanguage(language === "en" ? "sv" : "en")}
-                        className={styles.langBtn}
-                        title="Switch Language"
-                    >
-                        {language === "en" ? "SV" : "EN"}
-                    </button>
-
-                    <ThemeToggle />
-
                     <button
                         className={styles.hamburger}
                         onClick={() => setMobileOpen(!mobileOpen)}
