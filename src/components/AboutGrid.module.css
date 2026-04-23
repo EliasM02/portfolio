@@ -1,0 +1,128 @@
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+    width: 100%;
+}
+
+.card {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 24px;
+    transition: all var(--transition-normal);
+    display: flex;
+    flex-direction: column;
+}
+
+.card:hover {
+    border-color: var(--accent-blue);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+}
+
+.cardHeader {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 12px;
+}
+
+.icon {
+    font-size: 1.5rem;
+}
+
+.cardTitle {
+    font-family: var(--font-sans);
+    /* Use sans for cleaner look in grid? Or mono? Let's use sans for headers in cards */
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.cardContent {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.bioLine {
+    margin-bottom: 12px;
+}
+
+/* ── Skills ── */
+.skillsGrid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.skillTag {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    color: var(--accent-blue);
+    font-family: var(--font-mono);
+}
+
+/* ── Certs ── */
+.certList {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.certItem {
+    display: block;
+    padding: 12px;
+    background: var(--bg-secondary);
+    border-radius: var(--radius-sm);
+    border-left: 3px solid var(--accent-purple);
+    transition: background var(--transition-fast);
+    cursor: pointer;
+}
+
+.certItem:hover {
+    background: rgba(124, 77, 255, 0.1);
+}
+
+.certName {
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    margin-bottom: 4px;
+}
+
+.certIssuer {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.certDate {
+    color: var(--accent-cyan);
+}
+
+/* ── TryHackMe Badge ── */
+.badgeCard {
+    padding: 16px;
+}
+
+.badgeWrapper {
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+}
+
+.placeholder {
+    font-style: italic;
+    color: var(--text-muted);
+}
+
+@media (max-width: 768px) {
+    .badgeCard {
+        grid-column: span 1;
+    }
+}

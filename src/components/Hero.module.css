@@ -1,0 +1,171 @@
+.hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 120px 24px 60px;
+    position: relative;
+    text-align: center;
+    overflow: hidden;
+}
+
+.content {
+    max-width: 900px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+}
+
+.centered {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    z-index: 2;
+}
+
+.greeting {
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    /* Removed badge style to look more like terminal */
+    padding: 0;
+    background: transparent;
+    border: none;
+}
+
+.command {
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.name {
+    font-family: var(--font-mono);
+    /* Keeping mono for hacker vibe */
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.1;
+    letter-spacing: -1px;
+    margin-top: 10px;
+}
+
+.cursor {
+    display: inline-block;
+    color: var(--accent-blue);
+    animation: blink 1s step-end infinite;
+    margin-left: 2px;
+}
+
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+}
+
+.title {
+    font-family: var(--font-sans);
+    font-size: 1.5rem;
+    color: var(--accent-blue);
+    font-weight: 500;
+}
+
+.subtitle {
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    max-width: 600px;
+}
+
+.prompt {
+    color: var(--accent-blue);
+    font-weight: 600;
+}
+
+.actions {
+    display: flex;
+    gap: 16px;
+    margin-top: 16px;
+}
+
+.terminalWrapper {
+    width: 100%;
+    max-width: 700px;
+    margin-top: 20px;
+    /* Optional: 3D perspective tilt? */
+    perspective: 1000px;
+}
+
+/* ── Scroll hint ── */
+.scrollHint {
+    position: absolute;
+    bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    opacity: 0.7;
+}
+
+.mouse {
+    width: 26px;
+    height: 40px;
+    border: 2px solid var(--text-muted);
+    border-radius: 20px;
+    position: relative;
+}
+
+.wheel {
+    width: 4px;
+    height: 4px;
+    background: var(--accent-blue);
+    border-radius: 50%;
+    position: absolute;
+    top: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: scrollWheel 2s infinite;
+}
+
+@keyframes scrollWheel {
+    0% {
+        top: 6px;
+        opacity: 1;
+    }
+
+    100% {
+        top: 20px;
+        opacity: 0;
+    }
+}
+
+.scrollText {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+    .name {
+        font-size: 2.5rem;
+    }
+
+    .title {
+        font-size: 1.2rem;
+    }
+}

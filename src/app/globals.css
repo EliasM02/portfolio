@@ -1,42 +1,310 @@
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Kali Linux Theme (Dark Mode Default) */
+  --bg-primary: #080c10;
+  /* Deepest dark */
+  --bg-secondary: #0d1117;
+  /* Slightly lighter */
+  --bg-tertiary: #161b22;
+  /* Card bg */
+  --bg-card: #0d1117;
+  --bg-terminal: #000000;
+  /* Pure black for terminal */
+
+  --text-primary: #e6edf3;
+  --text-secondary: #8b949e;
+  --text-muted: #484f58;
+
+  /* Kali Accents */
+  --accent-blue: #2d89ef;
+  /* Kali Bright Blue */
+  --accent-cyan: #00d4ff;
+  /* Cyan highlight */
+  --accent-purple: #7c4dff;
+  /* Secondary accent */
+  --accent-red: #ff5f57;
+  /* Error/Close */
+  --accent-green: #28c840;
+  /* Success */
+
+  /* Mapped for compatibility with existing components */
+  --accent-primary: var(--accent-blue);
+
+  /* Overwriting old vars to match new theme if components use them */
+  --accent-green: #00ff41;
+  /* Keep matrix green for some hacky feel? No, map to Kali Blue for consistency? Let's keep green for terminal success/user@host */
+
+  --border-color: #30363d;
+  --border-highlight: #2d89ef;
+  /* Blue border on hover */
+
+  --glow-blue: 0 0 20px rgba(45, 137, 239, 0.15);
+  --glow-cyan: 0 0 20px rgba(0, 212, 255, 0.15);
+
+  --glass-bg: rgba(13, 17, 23, 0.85);
+  --glass-border: rgba(48, 54, 61, 0.6);
+
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  --font-sans: 'Inter', sans-serif;
+
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  /* Sharper corners for Kali feel */
+
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.3s ease;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+[data-theme="light"] {
+  /* Light mode: High contrast, clean, but keeping blue accents */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f0f2f5;
+  --bg-tertiary: #e4e7eb;
+  --bg-card: #ffffff;
+  --bg-terminal: #1a1e24;
+  /* Keep terminal dark even in light mode for contrast? Or make it light terminal? Let's make it light terminal for consistency */
+
+  --text-primary: #1a1e24;
+  --text-secondary: #4b5563;
+  --text-muted: #6b7280;
+
+  --accent-blue: #0056b3;
+  /* Darker blue for light bg */
+  --accent-cyan: #0088cc;
+  --accent-purple: #6f42c1;
+  --accent-red: #d32f2f;
+  --accent-green: #2e7d32;
+
+  --border-color: #d1d5db;
+  --border-highlight: #0056b3;
+
+  --glow-blue: 0 0 15px rgba(0, 86, 179, 0.2);
+  --glow-cyan: 0 0 15px rgba(0, 136, 204, 0.2);
+
+  --glass-bg: rgba(255, 255, 255, 0.9);
+  --glass-border: rgba(0, 0, 0, 0.1);
+
+  /* Update terminal specific specific if needed in components, but general bg-terminal handles it */
 }
 
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-* {
+/* ── Reset & Base ── */
+*,
+*::before,
+*::after {
   box-sizing: border-box;
-  padding: 0;
   margin: 0;
+  padding: 0;
 }
 
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+  transition: background-color var(--transition-normal), color var(--transition-normal);
+  overflow-x: hidden;
+  background-image: radial-gradient(circle at 50% 0%, #161b22 0%, #080c10 70%);
+  /* Subtle radial gradient */
+}
+
+/* ── Selection ── */
+::selection {
+  background: var(--accent-blue);
+  color: #ffffff;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border: 2px solid var(--bg-primary);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-blue);
+}
+
+/* ── Links ── */
 a {
-  color: inherit;
+  color: var(--accent-blue);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--accent-cyan);
+  text-shadow: 0 0 8px rgba(0, 212, 255, 0.4);
+}
+
+/* ── Container ── */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ── Section ── */
+.section {
+  padding: 100px 0;
+  position: relative;
+}
+
+.section-header {
+  margin-bottom: 48px;
+}
+
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--accent-green);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.section-label::before {
+  content: '>';
+  color: var(--accent-cyan);
+  font-weight: 700;
+}
+
+.section-title {
+  font-family: var(--font-mono);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+}
+
+.section-divider {
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent-green), var(--accent-cyan));
+  border-radius: 2px;
+}
+
+/* ── Fade-in Animation ── */
+.fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Button Styles ── */
+.btn {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  padding: 10px 20px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+  background: transparent;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+.btn:hover {
+  border-color: var(--accent-green);
+  color: var(--accent-green);
+  box-shadow: var(--glow-green);
+}
+
+.btn-primary {
+  background: var(--accent-green);
+  color: var(--bg-primary);
+  border-color: var(--accent-green);
+  font-weight: 600;
+}
+
+.btn-primary:hover {
+  background: transparent;
+  color: var(--accent-green);
+}
+
+/* ── Tag ── */
+.tag {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: var(--bg-tertiary);
+  color: var(--accent-cyan);
+  border: 1px solid var(--border-color);
+  white-space: nowrap;
+}
+
+/* ── Background grid ── */
+.bg-grid {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image:
+    linear-gradient(var(--border-color) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border-color) 1px, transparent 1px);
+  background-size: 60px 60px;
+  opacity: 0.04;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Utility ── */
+.mono {
+  font-family: var(--font-mono);
+}
+
+.text-green {
+  color: var(--accent-green);
+}
+
+.text-cyan {
+  color: var(--accent-cyan);
+}
+
+.text-purple {
+  color: var(--accent-purple);
+}
+
+.text-muted {
+  color: var(--text-secondary);
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .section {
+    padding: 60px 0;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+  }
+
+  .container {
+    padding: 0 16px;
   }
 }

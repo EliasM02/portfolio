@@ -1,66 +1,65 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+import Navbar from "@/components/Navbar";
+import Hero from "@/components/Hero";
+import Section from "@/components/Section";
+import NetworkGraph from "@/components/NetworkGraph";
+import ProjectCards from "@/components/ProjectCard";
+import Writeups from "@/components/Writeups";
+import ProcessCV from "@/components/ProcessCV";
+import Contact from "@/components/Contact";
+import MatrixBackground from "@/components/MatrixBackground";
+import { personalInfo } from "@/data/portfolio";
 
 export default function Home() {
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.tsx file.</h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+    <>
+      <MatrixBackground />
+      <Navbar />
+      <main>
+        <Hero />
+
+        {/* About / BloodHound Graph */}
+        <Section id="about" label="bloodhound" title="Attack Path">
+          <NetworkGraph />
+        </Section>
+
+        {/* Projects */}
+        <Section id="projects" label="ls ~/projects" title="Projects">
+          <ProjectCards />
+        </Section>
+
+        {/* Writeups */}
+        <Section id="writeups" label="ls ~/writeups" title="CTF Writeups">
+          <Writeups />
+        </Section>
+
+        {/* CV (Process List) */}
+        <Section id="cv" label="ps aux | grep work" title="Process List">
+          <ProcessCV />
+        </Section>
+
+        {/* Contact */}
+        <Section id="contact" label="netcat -lvnp 1337" title="Establish Connection">
+          <Contact />
+        </Section>
       </main>
-    </div>
+
+      {/* Footer */}
+      <footer
+        style={{
+          textAlign: "center",
+          padding: "40px 24px",
+          fontFamily: "var(--font-mono)",
+          fontSize: "0.75rem",
+          color: "var(--text-muted)",
+          borderTop: "1px solid var(--border-color)",
+          background: "var(--bg-secondary)",
+        }}
+      >
+        <p>
+          <span style={{ color: "var(--accent-blue)" }}>Kali Linux</span> Inspired Portfolio
+        </p>
+        <p style={{ marginTop: 4 }}>© {new Date().getFullYear()} {personalInfo.handle}</p>
+      </footer>
+    </>
   );
 }
