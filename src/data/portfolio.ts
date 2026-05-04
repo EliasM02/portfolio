@@ -98,6 +98,28 @@ export interface Writeup {
 
 export const writeups: Writeup[] = [
     {
+        title: "Interceptor",
+        slug: "interceptor",
+        platform: "TryHackMe",
+        category: "Web / SSRF",
+        difficulty: "Medium",
+        date: "May 2, 2026",
+        filename: "Interceptor.md",
+        summary:
+            "A medium web challenge focused on traffic interception and request manipulation. Backup file exposure revealed hardcoded admin credentials. Burp Suite was used to flip a JSON login response (ok:false → ok:true), and Firefox DevTools to inject is_verified=true into the 2FA POST request — bypassing both layers entirely. Final flag retrieved via SSRF using the file:// protocol in an Import Feed feature to read /var/www/user.txt.",
+    },
+    {
+        title: "Mustacchio",
+        slug: "mustacchio",
+        platform: "TryHackMe",
+        category: "XXE / Privilege Escalation",
+        difficulty: "Easy",
+        date: "May 4, 2026",
+        filename: "Mustacchio.md",
+        summary:
+            "A classic boot2root. Gobuster revealed a .bak file exposing an admin SHA1 hash, cracked to bulldog19. A full port scan uncovered an admin panel on port 8765 with an XXE-vulnerable comment field — exploited to leak Barry's encrypted SSH private key. After cracking the passphrase with john, a SUID binary (live_log) calling tail without an absolute path was abused for PATH hijacking to spawn a root shell.",
+    },
+    {
         title: "TryHeartMe",
         slug: "tryheartme",
         platform: "TryHackMe",
