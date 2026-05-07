@@ -40,11 +40,16 @@ export default async function WriteupPage({
         notFound();
     }
 
-    const processed = content.replace(
-        /!\[\[([^\]]+)\]\]/g,
-        (_, name: string) =>
-            `![${name}](/writeups/${name.replace(/ /g, "%20")})`
-    );
+    const processed = content
+        .replace(
+            /!\[\[([^\]]+)\]\]/g,
+            (_, name: string) =>
+                `![${name}](/writeups/${name.replace(/ /g, "%20")})`
+        )
+        .replace(
+            /^(Level|Date|Target IP):(.+)$/gm,
+            (_, key: string, val: string) => `${key}:${val}  `
+        );
 
     return (
         <div className={styles.page}>

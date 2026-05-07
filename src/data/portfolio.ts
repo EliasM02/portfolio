@@ -98,6 +98,17 @@ export interface Writeup {
 
 export const writeups: Writeup[] = [
     {
+        title: "Sequence",
+        slug: "sequence",
+        platform: "TryHackMe",
+        category: "Web / XSS / CSRF / Docker",
+        difficulty: "Medium",
+        date: "May 6, 2026",
+        filename: "Sequence.md",
+        summary:
+            "A multi-stage web challenge on review.thm. Gobuster found /mail/dump.txt exposing internal panel paths and a plaintext password. XSS via the contact form stole mod's PHPSESSID cookie (httponly flag unset), enabling session hijacking. A predictable CSRF token (md5(username)) was forged to promote the mod account to admin. An IDOR in the feature parameter revealed a hidden finance panel, where unrestricted file upload enabled a PHP reverse shell. A .dockerenv confirmed container execution — the exposed Docker socket was used to mount the host filesystem and chroot to a full root shell.",
+    },
+    {
         title: "Interceptor",
         slug: "interceptor",
         platform: "TryHackMe",
