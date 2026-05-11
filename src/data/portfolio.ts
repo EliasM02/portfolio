@@ -98,6 +98,17 @@ export interface Writeup {
 
 export const writeups: Writeup[] = [
     {
+        title: "Airplane",
+        slug: "airplane",
+        platform: "TryHackMe",
+        category: "LFI / gdbserver RCE / Privilege Escalation",
+        difficulty: "Medium",
+        date: "May 10, 2026",
+        filename: "Airplane.md",
+        summary:
+            "A Flask app exposed an LFI vulnerability via an unsanitized `?page=` parameter, enabling enumeration of `/etc/passwd` and `/proc` entries. Reading `/proc/net/tcp` revealed an unrecognised service on port 6048 — PID brute-forcing via LFI confirmed it as `gdbserver`. An msfvenom ELF payload was uploaded and executed through the GDB remote protocol, yielding a shell as `hudson`. A SUID `find` binary owned by `carlos` enabled lateral movement, and SSH key injection provided a stable shell. Finally, a misconfigured sudo rule allowing `ruby /root/*.rb` was bypassed via path traversal to spawn a root shell.",
+    },
+    {
         title: "Sequence",
         slug: "sequence",
         platform: "TryHackMe",
