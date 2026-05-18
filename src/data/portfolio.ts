@@ -92,11 +92,23 @@ export interface Writeup {
     category: string;
     difficulty: "Easy" | "Medium" | "Hard" | "Insane";
     date: string;
-    filename: string;
+    filename?: string;
+    files?: string[];
     summary: string;
 }
 
 export const writeups: Writeup[] = [
+    {
+        title: "K2",
+        slug: "k2",
+        platform: "TryHackMe",
+        category: "Chained Machines / Active Directory / Web",
+        difficulty: "Hard",
+        date: "May 14–16, 2026",
+        files: ["K2.md", "K2_Base_Camp.md", "K2_Middle_Camp.md", "K2_The_Summit.md", "K2_Summary.md"],
+        summary:
+            "A multi-stage, chained-machine room across three distinct environments. Web exploitation (Stored XSS + UNION SQLi) on a Linux server leaked credentials that enabled lateral movement into Active Directory. A Backup Operators abuse dumped the Administrator NTLM hash, which carried into the Root DC. A writable scripts folder allowed replacing a scheduled task to capture an NTLMv2 hash via Responder, followed by an RBCD attack to achieve Domain Admin.",
+    },
     {
         title: "Airplane",
         slug: "airplane",

@@ -163,6 +163,12 @@
     font-weight: 600;
 }
 
+.content hr {
+    border: none;
+    border-top: 1px solid var(--border-color);
+    margin: 40px 0;
+}
+
 .content blockquote {
     border-left: 3px solid var(--accent-cyan);
     padding-left: 16px;

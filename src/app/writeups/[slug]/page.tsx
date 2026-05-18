@@ -26,16 +26,18 @@ export default async function WriteupPage({
     const writeup = writeups.find((w) => w.slug === slug);
     if (!writeup) notFound();
 
-    const filePath = path.join(
-        process.cwd(),
-        "public",
-        "writeups",
-        writeup.filename
-    );
-
     let content = "";
     try {
-        content = fs.readFileSync(filePath, "utf-8");
+        if (writeup.files && writeup.files.length > 0) {
+            const parts = writeup.files.map((filename) => {
+                const filePath = path.join(process.cwd(), "public", "writeups", filename);
+                return fs.readFileSync(filePath, "utf-8");
+            });
+            content = parts.join("\n\n");
+        } else if (writeup.filename) {
+            const filePath = path.join(process.cwd(), "public", "writeups", writeup.filename);
+            content = fs.readFileSync(filePath, "utf-8");
+        }
     } catch {
         notFound();
     }
