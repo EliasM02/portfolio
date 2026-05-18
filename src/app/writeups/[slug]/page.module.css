@@ -42,7 +42,7 @@
 
 .tocTitle {
     font-family: var(--font-mono);
-    font-size: 0.78rem;
+    font-size: 0.85rem;
     color: var(--text-secondary);
     text-transform: uppercase;
     letter-spacing: 2px;
@@ -63,7 +63,7 @@
 .tocLink {
     display: block;
     font-family: var(--font-mono);
-    font-size: 0.9rem;
+    font-size: 1rem;
     color: var(--text-secondary);
     text-decoration: none;
     padding: 5px 0 5px 12px;
@@ -90,7 +90,7 @@
 .tocChildLink {
     display: block;
     font-family: var(--font-mono);
-    font-size: 0.83rem;
+    font-size: 0.93rem;
     color: var(--text-muted);
     text-decoration: none;
     padding: 4px 0 4px 24px;
@@ -145,7 +145,7 @@
 
 .title {
     font-family: var(--font-mono);
-    font-size: 2rem;
+    font-size: 2.4rem;
     font-weight: 700;
     color: var(--text-primary);
     margin-bottom: 16px;
@@ -184,8 +184,8 @@
 
 .content {
     color: var(--text-primary);
-    line-height: 1.8;
-    font-size: 0.95rem;
+    line-height: 1.85;
+    font-size: 1.05rem;
 }
 
 .content h1,
@@ -197,9 +197,9 @@
     font-weight: 600;
 }
 
-.content h1 { font-size: 1.5rem; color: var(--accent-cyan); }
-.content h2 { font-size: 1.2rem; }
-.content h3 { font-size: 1rem; color: var(--text-secondary); }
+.content h1 { font-size: 1.75rem; color: var(--accent-cyan); }
+.content h2 { font-size: 1.35rem; }
+.content h3 { font-size: 1.1rem; color: var(--text-secondary); }
 
 .content p {
     margin-bottom: 16px;
