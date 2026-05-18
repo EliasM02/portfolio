@@ -22,10 +22,10 @@ const syntaxStyle: React.CSSProperties = {
 const components: Components = {
     pre({ children }) {
         const child = React.Children.toArray(children)[0];
-        if (React.isValidElement(child) && child.type === "code") {
+        if (React.isValidElement(child)) {
             const { className, children: code } = child.props as {
                 className?: string;
-                children: string;
+                children: React.ReactNode;
             };
             const match = /language-(\w+)/.exec(className || "");
             if (match) {
@@ -43,13 +43,6 @@ const components: Components = {
             }
         }
         return <pre>{children}</pre>;
-    },
-    code({ className, children, ...props }) {
-        return (
-            <code className={className} {...props}>
-                {children}
-            </code>
-        );
     },
 };
 

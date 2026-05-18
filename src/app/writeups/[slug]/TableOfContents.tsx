@@ -2,63 +2,116 @@
 import { useEffect, useState } from "react";
 import styles from "./page.module.css";
 
-interface Heading {
+interface Child {
     id: string;
     text: string;
-    level: number;
+}
+
+interface Section {
+    id: string;
+    text: string;
+    children: Child[];
 }
 
 export default function TableOfContents() {
-    const [headings, setHeadings] = useState<Heading[]>([]);
+    const [sections, setSections] = useState<Section[]>([]);
     const [activeId, setActiveId] = useState<string>("");
+    const [activeSectionId, setActiveSectionId] = useState<string>("");
 
     useEffect(() => {
         const elements = Array.from(
             document.querySelectorAll<HTMLElement>("h1[id], h2[id]")
         );
 
-        setHeadings(
-            elements.map((el) => ({
-                id: el.id,
-                text: el.textContent || "",
-                level: parseInt(el.tagName[1]),
-            }))
-        );
+        // Build section tree
+        const built: Section[] = [];
+        let current: Section | null = null;
+        for (const el of elements) {
+            const level = parseInt(el.tagName[1]);
+            const item = { id: el.id, text: el.textContent || "" };
+            if (level === 1) {
+                current = { ...item, children: [] };
+                built.push(current);
+            } else if (level === 2 && current) {
+                current.children.push(item);
+            }
+        }
+        setSections(built);
+        if (built.length > 0) {
+            setActiveSectionId(built[0].id);
+            setActiveId(built[0].id);
+        }
 
-        const observer = new IntersectionObserver(
-            (entries) => {
-                const visible = entries
-                    .filter((e) => e.isIntersecting)
-                    .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
-                if (visible.length > 0) setActiveId(visible[0].target.id);
-            },
-            { rootMargin: "-80px 0px -55% 0px", threshold: 0 }
+        // Scroll-based tracking
+        const allHeadings = Array.from(
+            document.querySelectorAll<HTMLElement>("h1[id], h2[id]")
         );
+        const h1Headings = allHeadings.filter((el) => el.tagName === "H1");
 
-        elements.forEach((el) => observer.observe(el));
-        return () => observer.disconnect();
+        const onScroll = () => {
+            const scrollY = window.scrollY + 120;
+
+            // Active heading (any level)
+            let currentId = allHeadings[0]?.id || "";
+            for (const el of allHeadings) {
+                if (el.offsetTop <= scrollY) currentId = el.id;
+            }
+            setActiveId(currentId);
+
+            // Active section (H1 only)
+            let currentSection = h1Headings[0]?.id || "";
+            for (const el of h1Headings) {
+                if (el.offsetTop <= scrollY) currentSection = el.id;
+            }
+            setActiveSectionId(currentSection);
+        };
+
+        window.addEventListener("scroll", onScroll, { passive: true });
+        onScroll();
+        return () => window.removeEventListener("scroll", onScroll);
     }, []);
 
-    if (headings.length === 0) return null;
+    if (sections.length === 0) return null;
 
     return (
         <nav className={styles.toc}>
             <p className={styles.tocTitle}>Contents</p>
             <ul className={styles.tocList}>
-                {headings.map(({ id, text, level }) => (
-                    <li key={id}>
+                {sections.map((section) => (
+                    <li key={section.id} className={styles.tocSection}>
                         <a
-                            href={`#${id}`}
+                            href={`#${section.id}`}
                             className={[
                                 styles.tocLink,
-                                level === 2 ? styles.tocLinkH2 : "",
-                                activeId === id ? styles.tocLinkActive : "",
+                                activeId === section.id ? styles.tocLinkActive : "",
                             ]
                                 .filter(Boolean)
                                 .join(" ")}
                         >
-                            {text}
+                            {section.text}
                         </a>
+                        {activeSectionId === section.id &&
+                            section.children.length > 0 && (
+                                <ul className={styles.tocChildren}>
+                                    {section.children.map((child) => (
+                                        <li key={child.id}>
+                                            <a
+                                                href={`#${child.id}`}
+                                                className={[
+                                                    styles.tocChildLink,
+                                                    activeId === child.id
+                                                        ? styles.tocLinkActive
+                                                        : "",
+                                                ]
+                                                    .filter(Boolean)
+                                                    .join(" ")}
+                                            >
+                                                {child.text}
+                                            </a>
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
                     </li>
                 ))}
             </ul>

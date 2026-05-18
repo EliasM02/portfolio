@@ -4,29 +4,29 @@
     padding: 80px 0 120px;
 }
 
-/* ── Outer flex wrapper (TOC + content) ── */
+/* ── Outer flex wrapper (content + TOC) ── */
 
 .pageInner {
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
-    padding: 0 24px;
+    padding: 0 48px;
     display: flex;
-    gap: 56px;
+    gap: 48px;
     align-items: flex-start;
 }
 
 /* ── Main content column ── */
 
 .container {
-    max-width: 820px;
     flex: 1;
     min-width: 0;
+    max-width: 960px;
 }
 
-/* ── TOC sidebar ── */
+/* ── TOC sidebar (right) ── */
 
 .toc {
-    width: 210px;
+    width: 220px;
     flex-shrink: 0;
     position: sticky;
     top: 80px;
@@ -42,7 +42,7 @@
 
 .tocTitle {
     font-family: var(--font-mono);
-    font-size: 0.72rem;
+    font-size: 0.75rem;
     color: var(--text-secondary);
     text-transform: uppercase;
     letter-spacing: 2px;
@@ -56,29 +56,54 @@
     margin: 0;
 }
 
+.tocSection {
+    margin-bottom: 2px;
+}
+
 .tocLink {
     display: block;
     font-family: var(--font-mono);
-    font-size: 0.76rem;
-    color: var(--text-muted);
+    font-size: 0.82rem;
+    color: var(--text-secondary);
     text-decoration: none;
-    padding: 3px 0 3px 0;
+    padding: 4px 0 4px 10px;
     border-left: 2px solid transparent;
-    padding-left: 10px;
     line-height: 1.45;
     transition: color 0.15s, border-color 0.15s;
 }
 
-.tocLinkH2 {
-    padding-left: 22px;
-    font-size: 0.73rem;
-}
-
 .tocLink:hover {
-    color: var(--text-secondary);
+    color: var(--text-primary);
 }
 
 .tocLinkActive {
+    color: var(--accent-cyan) !important;
+    border-left-color: var(--accent-cyan);
+}
+
+.tocChildren {
+    list-style: none;
+    padding: 0;
+    margin: 2px 0 6px;
+}
+
+.tocChildLink {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    padding: 3px 0 3px 22px;
+    border-left: 2px solid transparent;
+    line-height: 1.4;
+    transition: color 0.15s, border-color 0.15s;
+}
+
+.tocChildLink:hover {
+    color: var(--text-secondary);
+}
+
+.tocChildLink.tocLinkActive {
     color: var(--accent-cyan) !important;
     border-left-color: var(--accent-cyan);
 }
@@ -332,9 +357,9 @@
 
 /* ── Responsive ── */
 
-@media (max-width: 1100px) {
+@media (max-width: 1200px) {
     .toc { display: none; }
-    .pageInner { max-width: 820px; }
+    .pageInner { max-width: 960px; }
 }
 
 @media (max-width: 768px) {

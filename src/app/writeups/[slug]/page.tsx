@@ -57,7 +57,6 @@ export default async function WriteupPage({
     return (
         <div className={styles.page}>
             <div className={styles.pageInner}>
-                <TableOfContents />
                 <div className={styles.container}>
                     <Link href="/#writeups" className={styles.back}>
                         ← Back
@@ -84,6 +83,7 @@ export default async function WriteupPage({
                         <p>{writeup.summary}</p>
                     </div>
                 </div>
+                <TableOfContents />
             </div>
         </div>
     );
