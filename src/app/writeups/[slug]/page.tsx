@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { writeups } from "@/data/portfolio";
 import WriteupContent from "./WriteupContent";
+import TableOfContents from "./TableOfContents";
 import styles from "./page.module.css";
 
 export function generateStaticParams() {
@@ -55,30 +56,33 @@ export default async function WriteupPage({
 
     return (
         <div className={styles.page}>
-            <div className={styles.container}>
-                <Link href="/#writeups" className={styles.back}>
-                    ← Back
-                </Link>
-                <header className={styles.header}>
-                    <span className={styles.platform}>{writeup.platform}</span>
-                    <h1 className={styles.title}>{writeup.title}</h1>
-                    <div className={styles.meta}>
-                        <span className={styles.category}>
-                            {writeup.category}
-                        </span>
-                        <span
-                            className={styles.difficulty}
-                            style={{ color: difficultyColor[writeup.difficulty] }}
-                        >
-                            {writeup.difficulty}
-                        </span>
-                        <span className={styles.date}>{writeup.date}</span>
+            <div className={styles.pageInner}>
+                <TableOfContents />
+                <div className={styles.container}>
+                    <Link href="/#writeups" className={styles.back}>
+                        ← Back
+                    </Link>
+                    <header className={styles.header}>
+                        <span className={styles.platform}>{writeup.platform}</span>
+                        <h1 className={styles.title}>{writeup.title}</h1>
+                        <div className={styles.meta}>
+                            <span className={styles.category}>
+                                {writeup.category}
+                            </span>
+                            <span
+                                className={styles.difficulty}
+                                style={{ color: difficultyColor[writeup.difficulty] }}
+                            >
+                                {writeup.difficulty}
+                            </span>
+                            <span className={styles.date}>{writeup.date}</span>
+                        </div>
+                    </header>
+                    <WriteupContent content={processed} />
+                    <div className={styles.summary}>
+                        <span className={styles.summaryLabel}>// summary</span>
+                        <p>{writeup.summary}</p>
                     </div>
-                </header>
-                <WriteupContent content={processed} />
-                <div className={styles.summary}>
-                    <span className={styles.summaryLabel}>// summary</span>
-                    <p>{writeup.summary}</p>
                 </div>
             </div>
         </div>
