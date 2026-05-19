@@ -3,6 +3,8 @@
 Date: May 14, 2026
 Target IP: 10.114.165.49
 
+---
+
 ## About Base Camp
 
 ```
@@ -20,6 +22,7 @@ They have only provided you with their external website called k2.thm.
 3. What are the usernames and passwords that had access to the server? List the usernames in alphabetical order with their corresponding password separated by a comma. Format is username:password.
 4. Two users have their full names on display. What are their names? In Alphabetical order. Format is first name last name separated by a comma.
 
+---
 
 ## Initial enumeration
 
@@ -33,6 +36,7 @@ nmap -sCV -p 1-10000 -oN nmap/initial k2.thm
 - 22 (SSH) OpenSSH 8.2p1 Ubuntu 4ubuntu0.7
 - 80 (HTTP) nginx 1.18.0
 
+---
 
 ## Web server enumeration
 
@@ -60,6 +64,7 @@ This suggests the form may be misconfigured and doesn't do anything useful. Movi
 
 ![[Pasted image 20260514183434.png]]
 
+---
 
 ## Vhost Enumeration
 
@@ -90,6 +95,7 @@ It's a system for submitting tickets.
 
 ![[Pasted image 20260514185307.png]]
 
+---
 
 ## Hunting for a way in
 
@@ -131,6 +137,7 @@ This did not work either, no callback -> Admin probably doesn't read tickets.
 
 Both dead ends. But the WAF kicking in when probing the `description` field on the admin side suggested something *was* being parsed - pointing toward **XSS** as the actual attack surface.
 
+---
 
 ## Stored XSS → Session Hijacking
 
@@ -176,6 +183,7 @@ Replacing the cookie in the browser gave full access to the admin panel as `jame
 
 ![[Pasted image 20260514201353.png]]
 
+---
 
 ## Admin Panel Recon
 
@@ -210,6 +218,7 @@ Inside the dashboard, three submitted tickets are visible:
 - "Select Ticket Title" form — possible injection point
 ```
 
+---
 
 ## SQL Injection → Credential Dump
 
@@ -344,6 +353,7 @@ hydra -C creds.txt ssh://k2.thm
 
 **User flag:** `THM{9e04a7419a2b7a86163496271a8a95dd}`
 
+---
 
 ## Privilege Escalation
 
@@ -370,6 +380,7 @@ A failed login attempt in the log contained the root password typed into the wro
 
 **Root flag:** `THM{c6f684e3b1089cd75f205f93de9fe93d}`
 
+---
 
 ## Post exploitation
 
@@ -396,6 +407,7 @@ And now we have the all the answers.
 - root:RdzQ7MSKt)fNaz3!
 - rose:vRMkaVgdfxhW!8
 
+---
 
 ## Credentials Carried Forward
 
@@ -410,3 +422,6 @@ cait:PartyAlLDaY!32
 xu:L0v3MyDog!3!
 ash:PikAchu!IshoesU!
 ```
+
+
+---
