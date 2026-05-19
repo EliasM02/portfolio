@@ -165,17 +165,6 @@ export const writeups: Writeup[] = [
             "A web challenge centered around JWT cookie manipulation. By decoding the session cookie, modifying the role to Admin and inflating the credit balance, then re-encoding and replacing the cookie, access to a hidden shop item was gained — demonstrating the danger of trusting unsigned or weakly-signed tokens.",
     },
     {
-        title: "Agent T",
-        slug: "agent-t",
-        platform: "TryHackMe",
-        category: "Web / RCE",
-        difficulty: "Easy",
-        date: "April 15, 2026",
-        filename: "Agent T.md",
-        summary:
-            "An Nmap scan revealed a PHP development server (8.1.0-dev) exposed on port 80. This specific version contains a backdoor CVE that allows unauthenticated remote code execution via a crafted User-Agentt header. Running a public exploit script immediately yielded a root shell.",
-    },
-    {
         title: "Brooklyn Nine Nine",
         slug: "b99",
         platform: "TryHackMe",

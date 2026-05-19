@@ -1,14 +1,8 @@
----
-
----
-
 # K2 – Summary
 
-
-**Platform:** TryHackMe
-**Difficulty:** Hard
-**Date:** May 14–16, 2026
-
+Platform: TryHackMe
+Difficulty: Hard
+Date: May 14–16, 2026
 
 ---
 

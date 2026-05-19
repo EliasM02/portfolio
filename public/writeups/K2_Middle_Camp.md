@@ -1,19 +1,9 @@
----
-
----
-
 # Middle Camp
 
-**Platform:** TryHackMe
-**Difficulty:** Hard
-**Date:** May 14–15, 2026
-**Target IP:** 10.112.149.251
+Date: May 14–15, 2026
+Target IP: 10.112.149.251
 
-
----
-
-
-## About 
+## About
 
 ```
 The IT Team can't believe that you have made it past the first server. However, they feel confident that you won't make it much further.
@@ -21,7 +11,7 @@ The IT Team can't believe that you have made it past the first server. However, 
 Use all of the information gathered from your previous findings in order to keep making your way to the top.
 ```
 
-**Tasks**
+## Tasks
 
 1. What is the user flag?
 2. What are the usernames found on the server? List the usernames in alphabetical order separated by a comma. Exclude the Administrator user.
@@ -29,9 +19,6 @@ Use all of the information gathered from your previous findings in order to keep
 4. What is the Administrator's NTLM hash?
 
 *Seems like we're diving into some AD with these questions!*
-
-
----
 
 
 ## Initial Enumeration
@@ -60,9 +47,6 @@ echo "10.112.149.251 k2.thm K2Server.k2.thm" >> /etc/hosts
 ```
 
 
----
-
-
 ## Credential Reuse from Base Camp
 
 ```bash
@@ -82,7 +66,7 @@ Let's make a list with different variations of these two users!
 
 ![[Pasted image 20260514234935.png]]
 
-### Username Format Discovery 
+### Username Format Discovery
 
 Testing variations of the full names confirmed the domain format: `firstname.lastname` → `j.bold`, `r.bud`!
 
@@ -106,9 +90,6 @@ SMB         10.112.149.251  445    K2SERVER         [-] k2.thm\j.bold:Pwd@9tLNrC
 ![[Pasted image 20260515001201.png]]
 
 ![[Pasted image 20260515001241.png]]
-
-
----
 
 
 ## WinRM as r.bud
@@ -154,9 +135,6 @@ At the very least adhere to the new password policy:
 - Needs to be at least 1 special character and 1 number
 
 
----
-
-
 ## Custom Wordlist → j.bold Password
 
 With this information we can generate a password list with a script then spray with `j.bold` against SMB and WinRM.
@@ -197,9 +175,6 @@ kerbrute bruteuser --dc k2server.k2.thm -d k2.thm james_wordlist.txt j.bold
 **And we got a hit `#8rockyou`!**
 
 
---- 
-
-
 ## Dead Ends - SMB, WinRM & Kerberoasting
 
 j.bold has access to SMB but nothing interesting in SYSVOL or NETLOGON.
@@ -232,9 +207,6 @@ impacket-GetUserSPNs k2.thm/j.bold:'#8rockyou' -dc-ip 10.112.149.251 -request
 Nothing here either. Three walls in a row, time to let BloodHound show the full picture instead.
 
 
----
-
-
 ## BloodHound Enumeration
 
 Let's see where we are instead with BloodHound.
@@ -255,9 +227,6 @@ j.bold → [MemberOf] → IT STAFF 1 → [GenericAll] → j.smith
 ```
 
 
----
-
-
 ## GenericAll → Force Password Reset
 
 ```bash
@@ -273,9 +242,6 @@ He has access to both SMB and WinRM, no interesting shares tho so I will dive in
 ![[Pasted image 20260515011240.png]]
 
 
----
-
-
 ## WinRM as j.smith
 
 On `j.smith`'s Desktop we find the user flag!
@@ -283,13 +249,10 @@ On `j.smith`'s Desktop we find the user flag!
 **User flag:** `THM{3e5a19a9ba91881f4d7852d92126a97f}`
 
 
----
-
-
 ## Privilege Escalation
 
- `j.smith` is a member of **Backup Operators** group, a built-in privileged group that grants the ability to read any file on the system, including the SAM and SYSTEM registry hives.
- 
+`j.smith` is a member of **Backup Operators** group, a built-in privileged group that grants the ability to read any file on the system, including the SAM and SYSTEM registry hives.
+
 ![[Pasted image 20260515011826.png]]
 
 To get the Administrator-hash we need the `SAM` and `SYSTEM` registries.
@@ -318,7 +281,7 @@ impacket-secretsdump -sam sam.reg -system system.reg LOCAL
 
 And there's the hash for `Administrator`!
 
-**Administrator hash:**`9545b61858c043477c350ae86c37b32f`
+**Administrator hash:** `9545b61858c043477c350ae86c37b32f`
 
 Now we log in with Administrator and get the root flag!
 
@@ -330,9 +293,7 @@ evil-winrm -i k2server.k2.thm -u Administrator -H 9545b61858c043477c350ae86c37b3
 
 ![[Pasted image 20260515134531.png]]
 
-**Root flag:**`THM{a7e9c8149fec53865eff983143b1f5ba}`
-
----
+**Root flag:** `THM{a7e9c8149fec53865eff983143b1f5ba}`
 
 
 ## Usernames on the Server (Alphabetical)
@@ -342,8 +303,6 @@ j.bold, j.smith, r.bud
 ```
 
 
----
-
 ## Credentials Carried Forward
 
 The Administrator NTLM hash is the key artefact taken into The Summit:
@@ -351,6 +310,3 @@ The Administrator NTLM hash is the key artefact taken into The Summit:
 ```
 Administrator hash: 9545b61858c043477c350ae86c37b32f
 ```
-
-
----

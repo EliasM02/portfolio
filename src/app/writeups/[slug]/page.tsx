@@ -50,7 +50,7 @@ export default async function WriteupPage({
                 `![${name}](/writeups/${name.replace(/ /g, "%20")})`
         )
         .replace(
-            /^(Level|Date|Target IP):(.+)$/gm,
+            /^(Platform|Difficulty|Level|Date|Target IP|Category):(.+)$/gm,
             (_, key: string, val: string) => `${key}:${val}  `
         );
 
